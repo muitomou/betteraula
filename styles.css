@@ -1,0 +1,735 @@
+/* =========================================
+   BETTER AULA - CORE THEME STYLES
+   ========================================= */
+
+:root {
+    /* Variables de color dinámicas por defecto (Light/Neutral) */
+    --ba-bg: #f7fafc;
+    --ba-nav: #2d3748;
+    --ba-accent: #3182ce;
+    --ba-card-border: #e2e8f0;
+    --ba-text-primary: #1a202c;
+    --ba-text-nav: #ffffff;
+    --ba-auto-text: #212529;
+    --ba-accent-rgb: 49, 130, 206;
+}
+
+/* 1. LA BARRA SUPERIOR */
+html body .navbar, 
+html body .fixed-top, 
+html body .navbar.bg-white {
+    background-color: var(--ba-nav) !important;
+    border-bottom: 3px solid var(--ba-accent) !important;
+    z-index: 10050 !important;
+}
+
+/* 1.1 OVERLAY BÚSQUEDA NATIVA (Simplificado #searchform-navbar) */
+html body #searchform-navbar, 
+html body .search-input-wrapper {
+    background-color: var(--ba-nav) !important;
+}
+
+html body #searchform-navbar input,
+html body #searchform-navbar .icon,
+html body #searchform-navbar .btn-close,
+html body #searchform-navbar .btn-submit,
+html body #searchform-navbar i,
+html body #searchform-navbar .input-group-append,
+html body #searchform-navbar .input-group-text,
+html body .search-input-wrapper .close-search,
+html body .search-input-wrapper .close-search i,
+html body .search-input-wrapper .close-search .icon,
+html body .search-input-wrapper input,
+html body .search-input-wrapper .input-group-append,
+html body .search-input-wrapper .input-group-text,
+html body .search-input-wrapper button[type="submit"],
+html body .search-input-wrapper button[type="submit"] i,
+html body .search-input-wrapper button[type="submit"] .icon {
+    color: var(--ba-text-nav) !important;
+    background-color: transparent !important;
+    border-color: rgba(255,255,255,0.2) !important;
+    box-shadow: none !important;
+}
+
+html body #searchform-navbar input::placeholder,
+html body .search-input-wrapper input::placeholder {
+    color: var(--ba-text-nav) !important;
+    opacity: 0.7 !important;
+}
+
+/* 1.2 TEXTOS E ICONOS DE LA BARRA SUPERIOR */
+html body .navbar .nav-link,
+html body .navbar .nav-link.active,
+html body .navbar .navbar-brand,
+html body .navbar .navbar-brand a,
+html body .navbar .icon,
+html body .navbar .text,
+html body .navbar .login a {
+    color: var(--ba-text-nav) !important;
+}
+
+/* Espaciado del logo principal USM.cl */
+html body .navbar {
+    padding-left: 1rem !important;
+}
+html body .navbar .navbar-brand,
+html body .navbar .site-name {
+    margin-left: 1rem !important;
+    padding-left: 1rem !important;
+}
+
+/* 1.3 MENÚS DESPLEGABLES (DROPDOWNS) DE NAVBAR */
+html body .navbar .dropdown-menu {
+    background-color: var(--ba-bg) !important;
+    border: 1px solid var(--ba-card-border) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+    margin-top: 0 !important; /* Evitar gap molesto que rompe el hover */
+}
+/* Al abrir on-hover sobre todo el item, mejoramos dramáticamente el UX */
+html body .navbar .nav-item.dropdown:hover .dropdown-menu {
+    display: block !important;
+}
+html body .navbar .dropdown-menu .dropdown-item,
+html body .navbar .dropdown-menu a {
+    color: var(--ba-auto-text) !important;
+    transition: background 0.2s !important;
+}
+html body .navbar .dropdown-menu .dropdown-item:hover,
+html body .navbar .dropdown-menu a:hover {
+    background-color: var(--ba-accent) !important;
+    color: #ffffff !important;
+}
+
+html body .navbar .nav-link.active,
+html body .navbar .nav-link:hover,
+html body .navbar .nav-item.active > .nav-link {
+    background-color: transparent !important;
+}
+
+html body .navbar .more-nav, 
+html body .navbar .navigation {
+    background-color: transparent !important;
+    border-bottom: none !important;
+}
+
+/* 2. FONDO GENERAL Y TEXTOS */
+body, #page, #page-login-index {
+    background-color: var(--ba-bg) !important;
+    background-image: none !important;
+    color: var(--ba-auto-text) !important;
+}
+
+/* 3. BARRA DE NAVEGACIÓN SECUNDARIA */
+.secondary-navigation, .more-nav, .navigation {
+    background-color: var(--ba-bg) !important;
+    border-bottom: 2px solid var(--ba-accent) !important;
+}
+
+.secondary-navigation .nav-link {
+    color: var(--ba-auto-text) !important;
+    font-weight: 600;
+}
+
+.secondary-navigation .nav-link:hover, .secondary-navigation .nav-link.active,
+.list-group-item.active, .nav-link.active {
+    background-color: rgba(var(--ba-accent-rgb), 0.15) !important;
+    color: var(--ba-accent) !important;
+    border-radius: 5px;
+    border-color: transparent !important;
+}
+
+/* 4. ESTRUCTURA Y ENVOLTORIOS (Fondo sin bordes iterados) */
+#page, #page-wrapper, #page-content, #region-main, #topofscroll, .main-inner, 
+.block-region, body, .drawer, .drawercontent, .courseindex, .bg-white, [class*="bg-white"], .navbar,
+.footer-container, .activity-header, .activity-information, .info, [class*="bg-secondary"], [class*="bg-light"] {
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-auto-text) !important;
+}
+
+/* 4.1. TARJETAS DE CURSOS Y BLOQUES (Con bordes) */
+/* FOUC Pre-hiding para tarjetas de curso */
+.dashboard-card, .card.coursebox, [data-course-id] {
+    opacity: 0 !important;
+}
+.ba-card-ready {
+    opacity: 1 !important;
+    transition: opacity 0.2s ease-in !important;
+}
+
+
+/* -------------------------------------------------------------
+   REFLOW FLUIDO: Desmantelamiento de Filas Atrapadas
+   Soluciona el problema de "pirámide". Moodle agrupa las tarjetas 
+   en distintas divs .row que bloquean a los de abajo de subir 
+   al hueco vacío. Utilizamos "display: contents" para aplanar.
+   ------------------------------------------------------------- */
+[data-region="course-items"],
+[data-region="paged-content-page"],
+.courses-view-course-items {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-content: flex-start !important;
+    margin-right: -15px !important;
+    margin-left: -15px !important;
+    /* Emular comportamiendo de '.row' en el ancestro maestro */
+    width: calc(100% + 30px) !important;
+}
+
+/* Volver a la fila un "fantasma". Las columnas interiores ahora fluirán libremente y se juntarán */
+[data-region="course-items"] > .row,
+[data-region="paged-content-page"] > .row,
+.courses-view-course-items > .row {
+    display: contents !important;
+}
+
+/* -------------------------------------------------------------
+   REFLOW MIS CURSOS (block_myoverview):
+   La página "Mis cursos" usa una jerarquía más profunda:
+   [paged-content-page] > [courses-view] > .paged-content-container > .row
+   El selector > .row de arriba no alcanza tan profundo.
+   Solución: hacer flex el .paged-content-container directamente.
+   ------------------------------------------------------------- */
+.paged-content-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-content: flex-start !important;
+    margin-right: -15px !important;
+    margin-left:  -15px !important;
+    width: calc(100% + 30px) !important;
+}
+
+.paged-content-container > .row {
+    display: contents !important;
+}
+
+/* -------------------------------------------------------------
+   REFLOW DASHBOARD: misma técnica para la página de inicio.
+   En el dashboard Moodle usa .frontpage-course-list-enrolled
+   + .dashboard-card-deck en lugar de [data-region] + .row.
+   Resultado: todas las tarjetas fluyen en un único flex pool.
+   ------------------------------------------------------------- */
+.frontpage-course-list-enrolled {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-content: flex-start !important;
+    /* compensa el margin lateral de las tarjetas */
+    margin-right: -15px !important;
+    margin-left:  -15px !important;
+}
+
+/* Disolver el div YUI interno redundante.
+   Excluir explicitamente .paging-morelink y cualquier .paging* para que
+   el botón "Todos los cursos" NUNCA entre al flex pool de tarjetas. */
+.frontpage-course-list-enrolled > div:not([class*="card"]):not([class*="paging"]) {
+    display: contents !important;
+}
+
+/* Disolver cada fila .dashboard-card-deck para que las tarjetas
+   salten directamente al flex pool del contenedor maestro */
+.frontpage-course-list-enrolled .dashboard-card-deck {
+    display: contents !important;
+}
+
+/* .paging-morelink ocupa fila completa y se queda al fondo */
+.frontpage-course-list-enrolled .paging-morelink {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 10px !important;
+    order: 9999 !important; /* siempre al final del flex */ 
+}
+
+/* Restaurar tamaño correcto de tarjeta cuando card-deck es contenido */
+.frontpage-course-list-enrolled .dashboard-card {
+    flex: 0 1 calc(33.333% - 30px) !important;
+    max-width: calc(33.333% - 30px) !important;
+    margin: 0 15px 30px !important;
+    min-width: 260px !important; /* fallback responsive */
+}
+
+.dashboard-card, .card, .block_myoverview, .block, .list-group-item,
+.course-content, .generalsection, .section-li, .activity, .path-course-view,
+.cell, th, td, .que, .formulation, .answer, .emoji-picker {
+    border: 1px solid var(--ba-card-border) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    overflow: visible !important; /* Mantiene el fix para los menús */
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-auto-text) !important;
+}
+
+/* 4.2 MENÚS, DROPDOWNS Y POPOVERS */
+.dropdown-menu.show {
+    background-color: var(--ba-bg) !important;
+    z-index: 1050 !important;
+}
+
+.simplesearchform input, .form-control[type="text"] {
+    border: 1px solid rgba(128,128,128,0.4) !important;
+}
+
+.dropdown-menu, .popover-region-container, .popover-region-header-container, 
+.popover-region-content-container, .popover-region-footer-container, 
+.content-item-container, .message-app, .header-container, .body-container, 
+.view-conversation, #searchform-navbar, .form-control, .custom-select, select, textarea,
+.btn-submit, .input-group-append, .input-group-text, .input-group-prepend {
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-auto-text) !important;
+    border-color: var(--ba-card-border) !important;
+}
+
+.progress-bar {
+    background-color: var(--ba-accent) !important;
+}
+
+/* 5. BOTONES */
+.btn-primary, .btn-secondary {
+    background-color: var(--ba-accent) !important;
+    border-color: var(--ba-nav) !important;
+    color: #fff !important;
+}
+.btn-primary:hover {
+    background-color: var(--ba-nav) !important;
+    color: #fff !important;
+}
+.btn-secondary:hover {
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-text-primary) !important;
+    border-color: var(--ba-accent) !important;
+}
+
+/* =========================================================
+   7. PÁGINA DE LOGIN (PORTADA USM SÓLIDA Y LIMPIA)
+   ========================================================= */
+
+/* 1. Fondo Liso: Usamos el fondo oscuro del Navbar para respetar los logos blancos nativos */
+html body .gadient-background,
+body#page-login-index, 
+body#page-login-index #page, 
+body#page-login-index #page-wrapper {
+    background-image: none !important;
+    background-color: var(--ba-nav) !important;
+}
+/* Destruir la capa de rayas diagonales custom de la USM */
+html body .backgroundwrap {
+    display: none !important;
+}
+
+/* 2. Panel Izquierdo (.info): Transparente para asimilarse al fondo liso */
+html body .gadient-background .info {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 2.1 Textos del panel izquierdo usaran el color de texto del nav */
+html body .gadient-background .info *,
+html body .gadient-background .guide-panel * {
+    color: var(--ba-text-nav) !important;
+    text-shadow: none !important;
+}
+
+/* 2.2 Fix maestro para el bloque AULA VIRTUAL USM.
+   Eliminamos la fea imagen de raíz por completo e inyectamos texto vectorial puro */
+html body .gadient-background .info .block {
+    display: none !important; /* Muerte absoluta al bloque nativo feo */
+}
+html body .gadient-background .info::before {
+    content: "AULA VIRTUAL\A USM";
+    white-space: pre;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-family: inherit;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ba-text-nav) !important;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+    display: block !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+/* 3. Panel Derecho (.panel): La caja real de Login. Ahora es una tarjeta limpia y radiante */
+html body .gadient-background .panel,
+body#page-login-index .card, 
+body#page-login-index #region-main, 
+body#page-login-index .loginwrapper,
+body#page-login-index .signuppanel {
+    background-color: var(--ba-bg) !important;
+    border: 1px solid var(--ba-card-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
+    color: var(--ba-auto-text) !important;
+}
+
+/* Párrafos e interiores del Login */
+html body .gadient-background .panel *,
+body#page-login-index .card *,
+body#page-login-index #region-main * {
+    color: var(--ba-auto-text) !important;
+    text-shadow: none !important;
+}
+
+/* Ajustes a botones nativos (Office365 / Local) para que usen el color de la extensión */
+html body .gadient-background .panel .btn,
+html body .gadient-background .panel button,
+html body .gadient-background .panel .login-button,
+body#page-login-index .btn {
+    background-color: var(--ba-accent) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    padding: 12px !important;
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    line-height: 1.2 !important;
+    box-sizing: border-box !important;
+}
+
+html body .gadient-background .panel button img,
+html body .gadient-background .panel .login-button img {
+    height: 20px !important;
+    width: auto !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+}
+
+html body .gadient-background .panel .btn:hover,
+html body .gadient-background .panel button:hover,
+html body .gadient-background .panel .login-button:hover,
+body#page-login-index .btn:hover {
+    filter: brightness(1.1) !important;
+    transform: translateY(-2px);
+    color: #ffffff !important;
+}
+
+/* 4. Resaltado limpio de inputs en el Login */
+html body .gadient-background input[type="text"],
+html body .gadient-background input[type="password"],
+body#page-login-index input[type="text"],
+body#page-login-index input[type="password"] {
+    background-color: var(--ba-bg) !important;
+    border: 2px solid color-mix(in srgb, var(--ba-auto-text) 20%, transparent) !important;
+    color: var(--ba-auto-text) !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    transition: all 0.2s ease !important;
+}
+html body .gadient-background input[type="text"]:focus,
+html body .gadient-background input[type="password"]:focus,
+body#page-login-index input[type="text"]:focus,
+body#page-login-index input[type="password"]:focus {
+    border-color: var(--ba-accent) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ba-accent) 40%, transparent) !important;
+}
+
+/* 5. Alertas */
+html body .gadient-background .alert,
+body#page-login-index .alert {
+    background-color: color-mix(in srgb, var(--ba-bg) 40%, transparent) !important;
+    border-color: color-mix(in srgb, var(--ba-auto-text) 10%, transparent) !important;
+    color: var(--ba-auto-text) !important;
+}
+
+/* 6. Fix de la barra azul marino inferior nativa de la USM */
+html body .gadient-background::after {
+    display: none !important; /* Moodle USM renderiza la barra azul secreta como un pseudo-elemento ::after */
+}
+html body .seals {
+    border-top: 4px solid var(--ba-accent) !important;
+}
+html body .gadient-background {
+    border-bottom: none !important;
+}
+
+/* FIX: MENÚS DESPLEGABLES TRUNCADOS Y SUPERPUESTOS */
+.dashboard-card:hover, .card:hover,
+.dashboard-card:focus-within, .card:focus-within {
+    z-index: 1050 !important;
+}
+
+/* Fuerza a la tarjeta con el menú abierto a pintarse sobre cualquier tarjeta en hover */
+.dashboard-card:has(.show), .card:has(.show), .block:has(.show), .list-group-item:has(.show) {
+    z-index: 1060 !important;
+}
+
+.dropdown-menu {
+    z-index: 9999 !important;
+}
+
+/* Ataque masivo a los contenedores de los cajones de Moodle */
+#page-wrapper, 
+.drawer-toggles, 
+.drawer, 
+.message-app, 
+.message-drawer, 
+[data-region="right-hand-drawer"],
+.drawer[data-region="right-hand-drawer"] {
+    z-index: 1050 !important;
+}
+
+/* Conservar componentes antiguos pero separados */
+.popover-region, #nav-drawer {
+    z-index: 1050 !important;
+}
+
+/* Permitir que los popovers escapen de las tablas del calendario (Rompe-cárceles) */
+.block_calendar_month, 
+.block_calendar_month .card-body, 
+.maincalendar, 
+.calendartable, 
+.calendartable tbody, 
+.calendartable tr, 
+.calendartable td {
+    overflow: visible !important;
+}
+
+.calendartable td.hasevent {
+    position: relative !important;
+}
+
+.calendartable td.hasevent:hover {
+    z-index: 9999 !important;
+}
+
+.popover, .popover.top, td.hasevent .popover {
+    z-index: 10000 !important;
+}
+
+/* Reducción preventiva del Backdrop por si Moodle lo eleva dinámicamente */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+/* Asegurar que el fondo oscuro de diálogo esté por detrás del Modal pero delante del Navbar (10050) */
+.moodle-dialogue-lightbox {
+    z-index: 10060 !important;
+}
+
+/* Forzar que Modales principales (ej: Caducará su sesión) siempre estén en la cima y reciban clicks */
+.modal, .moodle-dialogue-base, .moodle-dialogue {
+    z-index: 10070 !important;
+    pointer-events: auto !important;
+}
+
+/* =========================================
+   6. DARK MODE OVERRIDES (FASE 3)
+   ========================================= */
+html.ba-dark-mode {
+    --ba-bg: #111827 !important;
+    --ba-nav: #030712 !important;
+    --ba-card-border: #1f2937 !important;
+    --ba-text-primary: #f9fafb !important;
+    --ba-text-nav: #ffffff !important;
+    --ba-auto-text: #ffffff !important;
+}
+
+/* 6.1 ESTRUCTURA EN DARK MODE */
+html.ba-dark-mode #page, html.ba-dark-mode #page-login-index, html.ba-dark-mode #page-wrapper, html.ba-dark-mode #page-content, 
+html.ba-dark-mode #region-main, html.ba-dark-mode #topofscroll, html.ba-dark-mode .main-inner, 
+html.ba-dark-mode .block-region, html.ba-dark-mode body, html.ba-dark-mode .drawer, 
+html.ba-dark-mode .drawercontent, html.ba-dark-mode .courseindex, html.ba-dark-mode .bg-white, 
+html.ba-dark-mode [class*="bg-white"], html.ba-dark-mode .navbar, html.ba-dark-mode .footer-container, 
+html.ba-dark-mode .activity-header, html.ba-dark-mode .activity-dates, html.ba-dark-mode .activity-information, 
+html.ba-dark-mode .info, html.ba-dark-mode [class*="bg-secondary"], html.ba-dark-mode [class*="bg-light"] {
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-auto-text) !important;
+}
+
+/* 6.2 TARJETAS EN DARK MODE */
+html.ba-dark-mode .dashboard-card, html.ba-dark-mode .card, html.ba-dark-mode .secondary-navigation, 
+html.ba-dark-mode .more-nav, html.ba-dark-mode .navigation, html.ba-dark-mode .block_myoverview, 
+html.ba-dark-mode .list-group-item, html.ba-dark-mode .course-content, 
+html.ba-dark-mode .generalsection, html.ba-dark-mode .section-li, html.ba-dark-mode .activity, 
+html.ba-dark-mode .path-course-view, html.ba-dark-mode .block, html.ba-dark-mode th, html.ba-dark-mode td, 
+html.ba-dark-mode .que, html.ba-dark-mode .formulation, html.ba-dark-mode .emoji-picker {
+    background-color: var(--ba-bg) !important;
+    border-color: var(--ba-card-border) !important;
+    color: var(--ba-auto-text) !important;
+}
+
+/* 6.3 MENÚS Y COMPONENTES EN DARK MODE */
+html.ba-dark-mode .dropdown-menu, html.ba-dark-mode .popover-region-container, 
+html.ba-dark-mode .popover-region-header-container, html.ba-dark-mode .popover-region-content-container, 
+html.ba-dark-mode .popover-region-footer-container, html.ba-dark-mode .content-item-container, 
+html.ba-dark-mode .message-app, html.ba-dark-mode .header-container, html.ba-dark-mode .body-container, 
+html.ba-dark-mode .view-conversation, html.ba-dark-mode #searchform-navbar, html.ba-dark-mode .form-control,
+html.ba-dark-mode .custom-select, html.ba-dark-mode select, html.ba-dark-mode textarea,
+html.ba-dark-mode .btn-submit, html.ba-dark-mode .input-group-append, html.ba-dark-mode .input-group-text, 
+html.ba-dark-mode .input-group-prepend {
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-auto-text) !important;
+    border-color: var(--ba-card-border) !important;
+}
+
+/* FASE 5: Contraste agresivo en textos dentro de Dark Mode */
+html.ba-dark-mode body,
+html.ba-dark-mode #page,
+html.ba-dark-mode p,
+html.ba-dark-mode span,
+html.ba-dark-mode div,
+html.ba-dark-mode .card-body,
+html.ba-dark-mode h1,
+html.ba-dark-mode h2,
+html.ba-dark-mode h3,
+html.ba-dark-mode h4,
+html.ba-dark-mode h5,
+html.ba-dark-mode a {
+    color: var(--ba-auto-text) !important;
+}
+
+/* FIX: Invertir iconos oscuros genéricos que desaparecen en Dark Mode (Moodle .icon) */
+html.ba-dark-mode img.icon {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Opcional: reducir el brillo general de los elementos muy blancos del campus en dark mode */
+html.ba-dark-mode img:not(.icon):not(.activityicon), html.ba-dark-mode iframe {
+    filter: brightness(0.9);
+}
+
+
+/* === BA FIX: Colapso real de columna oculta en flex grid === */
+.ba-hidden-course {
+    display: none !important;
+    flex: 0 0 0% !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* === BA FIX: Menú ⚙️ Opciones en tarjetas — texto legible en dark mode ===
+   El div del menú y sus items usan inline styles (background:#fff, color:#2d3748).
+   Nuestro dark mode override con !important aplastaba esos colores dejando
+   texto blanco sobre fondo blanco. Restauramos los colores correctos. */
+html.ba-dark-mode .aulify-options-container > div {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+html.ba-dark-mode .aulify-options-container > div > div {
+    background-color: #ffffff !important;
+    color: #2d3748 !important;
+    border-bottom-color: #e2e8f0 !important;
+}
+/* En dark mode el menú también es oscuro */
+html.ba-dark-mode .aulify-options-container > div {
+    background-color: #1e293b !important;
+    border-color: rgba(255,255,255,0.1) !important;
+}
+html.ba-dark-mode .aulify-options-container > div > div {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-bottom-color: rgba(255,255,255,0.08) !important;
+}
+html.ba-dark-mode .aulify-options-container > div > div:last-child {
+    color: #fc8181 !important; /* rojo más suave para dark mode */
+}
+
+/* === BA FIX: Dark mode menú custom tarjetas === */
+.ba-dark-mode .card .dropdown-menu,
+.ba-dark-mode .dashboard-card .dropdown-menu,
+.ba-dark-mode .ba-options-container .dropdown-menu,
+.ba-dark-mode .dropdown-menu {
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-auto-text) !important;
+    border: 1px solid rgba(128,128,128,0.25) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
+}
+
+.ba-dark-mode .card .dropdown-menu .dropdown-item,
+.ba-dark-mode .dashboard-card .dropdown-menu .dropdown-item,
+.ba-dark-mode .dropdown-menu .dropdown-item {
+    color: var(--ba-auto-text) !important;
+    background-color: transparent !important;
+}
+
+.ba-dark-mode .dropdown-menu .dropdown-item:hover,
+.ba-dark-mode .dropdown-menu .dropdown-item:focus {
+    background-color: var(--ba-nav) !important;
+    color: var(--ba-text-nav) !important;
+}
+
+/* Flechas de popover — Bootstrap 5 y Bootstrap 4 (fallback) */
+.ba-dark-mode .bs-popover-top > .popover-arrow::after,
+.ba-dark-mode .bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after {
+    border-top-color: var(--ba-bg) !important;
+}
+.ba-dark-mode .bs-popover-top > .arrow::after,
+.ba-dark-mode .bs-popover-auto[x-placement^="top"] > .arrow::after {
+    border-top-color: var(--ba-bg) !important;
+}
+
+/* === BA: Calendario premium === */
+.calendartable td.day {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding: 2px !important;
+}
+
+.calendartable td.day .day-number-circle,
+.calendartable td.day a {
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background-color 0.15s ease !important;
+}
+
+.calendartable td.day:hover .day-number-circle,
+.calendartable td.day:hover > a {
+    background-color: color-mix(in srgb, var(--ba-primary) 20%, transparent) !important;
+}
+
+/* Fallback si color-mix no está disponible */
+@supports not (background-color: color-mix(in srgb, red 20%, transparent)) {
+    .calendartable td.day:hover .day-number-circle,
+    .calendartable td.day:hover > a {
+        opacity: 0.7 !important;
+        background-color: var(--ba-primary) !important;
+    }
+}
+
+/* === FIX DEFINITIVO: Popovers del Calendario en Dark Mode === */
+
+/* 1. Contenedor principal del overlay oscuro */
+html.ba-dark-mode body .popover,
+html.ba-dark-mode body .calendarwrapper .popover,
+html.ba-dark-mode body .block_calendar_month .popover,
+html.ba-dark-mode body .calendar-event-popover,
+html.ba-dark-mode body .yui3-overlay-content,
+html.ba-dark-mode body .moodle-dialogue-base .moodle-dialogue-wrap,
+html.ba-dark-mode body [role="tooltip"] {
+    background-color: var(--ba-bg) !important;
+    color: var(--ba-auto-text) !important;
+    border: 1px solid rgba(128, 128, 128, 0.25) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+}
+
+/* 2. Nuclear: forzar la transparencia de TODO contenedor nativo en el popup 
+   Excluye interacciones como botones y alertas para no romper la UI funcional */
+html.ba-dark-mode body .popover *:not(.btn):not(button):not(input):not(.alert):not(badge):not(.badge):not(a),
+html.ba-dark-mode body .yui3-overlay-content *:not(.btn):not(button):not(input):not(.alert):not(.badge):not(a),
+html.ba-dark-mode body .moodle-dialogue-base .moodle-dialogue-wrap *:not(.btn):not(button):not(input):not(.alert):not(.badge):not(a),
+html.ba-dark-mode body [role="tooltip"] *:not(.btn):not(button):not(input):not(.alert):not(.badge):not(a) {
+    background-color: transparent !important;
+    color: var(--ba-auto-text) !important;
+    text-shadow: none !important;
+    border-color: rgba(128,128,128,0.2) !important;
+}
+
+/* 3. Headers limpios y divisorios */
+html.ba-dark-mode body .popover .popover-header,
+html.ba-dark-mode body .moodle-dialogue-base .moodle-dialogue-hd {
+    background-color: color-mix(in srgb, var(--ba-bg) 80%, var(--ba-nav)) !important;
+    color: var(--ba-auto-text) !important;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25) !important;
+}
