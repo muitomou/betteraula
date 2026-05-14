@@ -1,15 +1,18 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Better Aula",
   "version": "1.0",
+  "author": "Mauro Castillo",
   "description": "Personaliza tu experiencia en Aula USM. Dark mode, temas y más.",
   "minimum_chrome_version": "88",
   "permissions": [
     "activeTab",
-    "storage",
+    "storage"
+  ],
+  "host_permissions": [
     "*://aula.usm.cl/*"
   ],
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_title": "Configurar Better Aula",
     "default_icon": "icon48.png"
@@ -28,18 +31,28 @@
         "panel-ui.js",
         "theme-engine.js",
         "hidden-courses.js",
-        "content.js"
+        "image-manager.js",
+        "content.js",
+        "image-picker.js"
       ],
       "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
-    "images/*",
-    "logousmletrasblancas.png"
+    {
+      "resources": [
+        "images/*",
+        "assets/presets/*",
+        "logousmletrasblancas.png"
+      ],
+      "matches": [
+        "*://aula.usm.cl/*"
+      ]
+    }
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "betteraula-core@tu-dominio.com",
+      "id": "betteraula@usm.cl",
       "strict_min_version": "120.0",
       "data_collection_permissions": {
         "required": ["none"]

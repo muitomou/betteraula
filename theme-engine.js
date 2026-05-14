@@ -1,4 +1,8 @@
 /**
+ * @file theme-engine.js
+ * @description Motor centralizado de temas que aplica colores calculados al :root.
+ */
+/**
  * theme-engine.js — Better Aula v1.0
  * IIFE Module: BA.ThemeEngine
  *
@@ -235,7 +239,16 @@
       if (!theme || !theme.colors) return;
       _currentTheme = theme;
       _applyColorsToRoot(theme.colors);
-      chrome.storage.local.set({ uiThemeConfig: _currentTheme });
+      
+      var payloads = { uiThemeConfig: _currentTheme };
+      if (theme.courseImages) {
+         payloads.courseConfig = theme.courseImages;
+         if (BA.ImageManager && typeof BA.ImageManager.applyBulk === 'function') {
+           BA.ImageManager.applyBulk(theme.courseImages);
+         }
+      }
+      
+      chrome.storage.local.set(payloads);
 
       var shadow = BA.PanelUI && BA.PanelUI.getShadow ? BA.PanelUI.getShadow() : null;
       if (shadow) {
@@ -289,21 +302,25 @@
       var accCol = inputs.accVal || (_currentTheme.colors && _currentTheme.colors.accent) || '#3182ce';
       var bgCol  = inputs.bgVal  || (_currentTheme.colors && _currentTheme.colors.bg)     || '#f7fafc';
 
-      var newTheme = {
-        id:     'custom_' + Date.now(),
-        colors: _buildCustomColors(navCol, accCol, bgCol)
-      };
+      chrome.storage.local.get(['courseConfig'], function(res) {
+        var newTheme = {
+          id:     'custom_' + Date.now(),
+          colors: _buildCustomColors(navCol, accCol, bgCol),
+          courseImages: res.courseConfig || {},
+          savedAt: Date.now()
+        };
 
-      _savedThemes.push(newTheme);
-      _currentTheme = newTheme;
+        _savedThemes.push(newTheme);
+        _currentTheme = newTheme;
 
-      chrome.storage.local.set(
-        { savedCustomThemes: _savedThemes, uiThemeConfig: _currentTheme },
-        function () {
-          _applyColorsToRoot(newTheme.colors);
-          BA.PanelUI.renderSavedThemes(_savedThemes);
-        }
-      );
+        chrome.storage.local.set(
+          { savedCustomThemes: _savedThemes, uiThemeConfig: _currentTheme },
+          function () {
+            _applyColorsToRoot(newTheme.colors);
+            BA.PanelUI.renderSavedThemes(_savedThemes);
+          }
+        );
+      });
     },
 
     /**

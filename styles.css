@@ -1,3 +1,7 @@
+/**
+ * @file styles.css
+ * @description Hoja de estilos global inyectada para aplicar temas personalizados y reestructurar el layout de Moodle.
+ */
 /* =========================================
    BETTER AULA - CORE THEME STYLES
    ========================================= */
@@ -141,7 +145,7 @@ body, #page, #page-login-index {
 /* 4. ESTRUCTURA Y ENVOLTORIOS (Fondo sin bordes iterados) */
 #page, #page-wrapper, #page-content, #region-main, #topofscroll, .main-inner, 
 .block-region, body, .drawer, .drawercontent, .courseindex, .bg-white, [class*="bg-white"], .navbar,
-.footer-container, .activity-header, .activity-information, .info, [class*="bg-secondary"], [class*="bg-light"] {
+.footer-container, .activity-header, .activity-information, .info, [class*="bg-secondary"], [class*="bg-light"], .user-report-container {
     background-color: var(--ba-bg) !important;
     color: var(--ba-auto-text) !important;
 }
@@ -258,6 +262,21 @@ body, #page, #page-login-index {
     color: var(--ba-auto-text) !important;
 }
 
+/* Category styling */
+.course-category, .card .text-muted .categoryname, .card-body .text-muted {
+    background-color: var(--ba-accent) !important;
+    color: var(--ba-text-nav) !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    display: inline-block !important;
+}
+.course-category a, .card .text-muted .categoryname a, .card-body .text-muted a {
+    color: var(--ba-text-nav) !important;
+    text-decoration: none !important;
+}
+
 /* 4.2 MENÚS, DROPDOWNS Y POPOVERS */
 .dropdown-menu.show {
     background-color: var(--ba-bg) !important;
@@ -283,12 +302,12 @@ body, #page, #page-login-index {
 }
 
 /* 5. BOTONES */
-.btn-primary, .btn-secondary {
+.btn-primary, .btn-secondary, .btn-success, .drawer-toggles .drawer-toggler .btn {
     background-color: var(--ba-accent) !important;
     border-color: var(--ba-nav) !important;
     color: #fff !important;
 }
-.btn-primary:hover {
+.btn-primary:hover, .btn-success:hover, .drawer-toggles .drawer-toggler .btn:hover {
     background-color: var(--ba-nav) !important;
     color: #fff !important;
 }
@@ -296,6 +315,21 @@ body, #page, #page-login-index {
     background-color: var(--ba-bg) !important;
     color: var(--ba-text-primary) !important;
     border-color: var(--ba-accent) !important;
+}
+
+/* Make text-success use the theme accent color */
+.text-success {
+    color: var(--ba-accent) !important;
+}
+
+/* Global Link Colors (Inside main content and blocks) */
+html body #region-main a:not(.btn):not(.nav-link):not(.page-link):not(.dropdown-item),
+html body .block a:not(.btn):not(.nav-link):not(.page-link):not(.dropdown-item) {
+    color: var(--ba-accent);
+}
+html body #region-main a:not(.btn):not(.nav-link):not(.page-link):not(.dropdown-item):hover,
+html body .block a:not(.btn):not(.nav-link):not(.page-link):not(.dropdown-item):hover {
+    color: var(--ba-nav);
 }
 
 /* =========================================================
@@ -453,12 +487,12 @@ html body .gadient-background {
 /* FIX: MENÚS DESPLEGABLES TRUNCADOS Y SUPERPUESTOS */
 .dashboard-card:hover, .card:hover,
 .dashboard-card:focus-within, .card:focus-within {
-    z-index: 1050 !important;
+    z-index: 10 !important;
 }
 
 /* Fuerza a la tarjeta con el menú abierto a pintarse sobre cualquier tarjeta en hover */
 .dashboard-card:has(.show), .card:has(.show), .block:has(.show), .list-group-item:has(.show) {
-    z-index: 1060 !important;
+    z-index: 11 !important;
 }
 
 .dropdown-menu {
@@ -539,7 +573,7 @@ html.ba-dark-mode .block-region, html.ba-dark-mode body, html.ba-dark-mode .draw
 html.ba-dark-mode .drawercontent, html.ba-dark-mode .courseindex, html.ba-dark-mode .bg-white, 
 html.ba-dark-mode [class*="bg-white"], html.ba-dark-mode .navbar, html.ba-dark-mode .footer-container, 
 html.ba-dark-mode .activity-header, html.ba-dark-mode .activity-dates, html.ba-dark-mode .activity-information, 
-html.ba-dark-mode .info, html.ba-dark-mode [class*="bg-secondary"], html.ba-dark-mode [class*="bg-light"] {
+html.ba-dark-mode .info, html.ba-dark-mode [class*="bg-secondary"], html.ba-dark-mode [class*="bg-light"], html.ba-dark-mode .user-report-container {
     background-color: var(--ba-bg) !important;
     color: var(--ba-auto-text) !important;
 }
@@ -581,9 +615,15 @@ html.ba-dark-mode h1,
 html.ba-dark-mode h2,
 html.ba-dark-mode h3,
 html.ba-dark-mode h4,
-html.ba-dark-mode h5,
-html.ba-dark-mode a {
+html.ba-dark-mode h5 {
     color: var(--ba-auto-text) !important;
+}
+
+/* Links stay brightly colored in Dark Mode for contrast */
+html.ba-dark-mode #region-main a:not(.btn):not(.nav-link):not(.page-link):not(.dropdown-item),
+html.ba-dark-mode .block a:not(.btn):not(.nav-link):not(.page-link):not(.dropdown-item) {
+    color: var(--ba-accent) !important;
+    filter: brightness(1.3);
 }
 
 /* FIX: Invertir iconos oscuros genéricos que desaparecen en Dark Mode (Moodle .icon) */
@@ -607,7 +647,7 @@ html.ba-dark-mode img:not(.icon):not(.activityicon), html.ba-dark-mode iframe {
     margin: 0 !important;
 }
 
-/* === BA FIX: Menú ⚙️ Opciones en tarjetas — texto legible en dark mode ===
+/* === BA FIX: Menú Opciones en tarjetas — texto legible en dark mode ===
    El div del menú y sus items usan inline styles (background:#fff, color:#2d3748).
    Nuestro dark mode override con !important aplastaba esos colores dejando
    texto blanco sobre fondo blanco. Restauramos los colores correctos. */
@@ -686,7 +726,15 @@ html.ba-dark-mode .aulify-options-container > div > div:last-child {
 
 .calendartable td.day:hover .day-number-circle,
 .calendartable td.day:hover > a {
-    background-color: color-mix(in srgb, var(--ba-primary) 20%, transparent) !important;
+    background-color: color-mix(in srgb, var(--ba-accent) 20%, transparent) !important;
+}
+
+/* Hoy / Resaltado del Calendario */
+.calendartable td.today .day-number-circle,
+.calendartable td.today a {
+    background-color: var(--ba-accent) !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
 }
 
 /* Fallback si color-mix no está disponible */
@@ -694,7 +742,7 @@ html.ba-dark-mode .aulify-options-container > div > div:last-child {
     .calendartable td.day:hover .day-number-circle,
     .calendartable td.day:hover > a {
         opacity: 0.7 !important;
-        background-color: var(--ba-primary) !important;
+        background-color: var(--ba-accent) !important;
     }
 }
 
@@ -732,4 +780,92 @@ html.ba-dark-mode body .moodle-dialogue-base .moodle-dialogue-hd {
     background-color: color-mix(in srgb, var(--ba-bg) 80%, var(--ba-nav)) !important;
     color: var(--ba-auto-text) !important;
     border-bottom: 1px solid rgba(128, 128, 128, 0.25) !important;
+}
+
+/* =========================================
+   8. CORRECCIONES FEATURE MEDIA BACKGROUNDS
+   ========================================= */
+.dashboard-card .card-body, 
+.card.coursebox .card-body, 
+.dashboard-card .course-info-container, 
+[data-course-id] .card-body {
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+[data-course-id] .dashboard-card-img::after,
+[data-course-id] .card-img::after,
+[data-course-id] .course-image-view::after {
+    display: none !important;
+}
+
+/* =========================================
+   9. BETTER AULA MESH GRADIENTS (CSS ONLY)
+   ========================================= */
+
+/* Keyframes universales para el flujo de malla estética */
+@keyframes baAestheticFlow {
+    0% { background-position: 0% 0%, 100% 100%; }
+    50% { background-position: 100% 100%, 0% 0%; }
+    100% { background-position: 0% 0%, 100% 100%; }
+}
+
+/* Base estética para tarjetas animadas */
+.ba-mesh-card {
+    background-repeat: no-repeat !important;
+    animation: baAestheticFlow 20s ease-in-out infinite !important; 
+    transform: translateZ(0); 
+    will-change: background-position;
+    /* FIX CRÍTICO: 200% de tamaño para permitir el paneo */
+    background-size: 200% 200%, 200% 200% !important; 
+}
+
+/* 8 Themes Presets */
+.ba-mesh-usm {
+    background-color: #2b6cb0 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(49, 130, 206, 0.9) 0%, rgba(49, 130, 206, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(99, 179, 237, 0.8) 0%, rgba(99, 179, 237, 0) 90%) !important;
+}
+.ba-mesh-ocean {
+    background-color: #0369a1 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.9) 0%, rgba(14, 165, 233, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.8) 0%, rgba(56, 189, 248, 0) 90%) !important;
+}
+.ba-mesh-forest {
+    background-color: #047857 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.9) 0%, rgba(16, 185, 129, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(52, 211, 153, 0.8) 0%, rgba(52, 211, 153, 0) 90%) !important;
+}
+.ba-mesh-sunset {
+    background-color: #c2410c !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.9) 0%, rgba(249, 115, 22, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(251, 146, 60, 0.8) 0%, rgba(251, 146, 60, 0) 90%) !important;
+}
+.ba-mesh-pink {
+    background-color: #e11d48 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(251, 113, 133, 0.9) 0%, rgba(251, 113, 133, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(255, 182, 193, 0.8) 0%, rgba(255, 182, 193, 0) 90%) !important;
+}
+.ba-mesh-purple {
+    background-color: #6d28d9 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.9) 0%, rgba(139, 92, 246, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(167, 139, 250, 0.8) 0%, rgba(167, 139, 250, 0) 90%) !important;
+}
+.ba-mesh-celeste {
+    background-color: #0284c7 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.9) 0%, rgba(56, 189, 248, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(125, 211, 252, 0.8) 0%, rgba(125, 211, 252, 0) 90%) !important;
+}
+.ba-mesh-coffee {
+    background-color: #b45309 !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(245, 158, 11, 0.9) 0%, rgba(245, 158, 11, 0) 90%),
+        radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.8) 0%, rgba(251, 191, 36, 0) 90%) !important;
 }

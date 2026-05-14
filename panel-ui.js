@@ -1,13 +1,6 @@
 /**
- * panel-ui.js — Better Aula v1.0
- * IIFE Module: BA.PanelUI
- *
- * Responsabilidad: crear y gestionar el panel de configuración in-app
- * usando Shadow DOM para aislamiento total de los estilos de Moodle.
- *
- * Carga: document_idle, DESPUÉS de navbar-injector.js, ANTES de theme-engine.js
- * Depende de: window.BetterAula (namespace ya inicializado)
- * Dependientes: theme-engine.js (hydrate), hidden-courses.js (renderHiddenList)
+ * @file panel-ui.js
+ * @description Inyección y manejo de la UI del panel de configuración flotante.
  */
 (function (BA) {
 
@@ -554,7 +547,11 @@
     /* Footer */
     '<div id="ba-footer">',
     '  <div>Better Aula v1.0 &mdash; Aula USM</div>',
-    '  <div style="margin-top:4px">',
+    '  <div style="margin-top:4px; font-size: 10px; color: #6b7280; font-weight: 500;">Desarrollado por Mauro Castillo</div>',
+    '  <div style="margin-top:8px; font-size: 11px;">',
+    '    ¿Te gusta Better Aula? <a href="https://link.mercadopago.cl/donacionbetteraula" target="_blank" rel="noopener noreferrer" style="color: #3b82f6; text-decoration: none;">Apoya el proyecto aquí</a>',
+    '  </div>',
+    '  <div style="margin-top:8px">',
     '    <a href="https://github.com" target="_blank" rel="noopener">',
     '      Reportar un problema',
     '    </a>',

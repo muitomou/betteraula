@@ -1,4 +1,8 @@
 /**
+ * @file content.js
+ * @description Orquestador principal de módulos inyectados.
+ */
+/**
  * content.js — Better Aula v1.0 (ORQUESTADOR)
  *
  * Este archivo es ahora el orquestador principal. Las responsabilidades
@@ -201,43 +205,47 @@ function injectUploadButtons() {
       };
 
       var itemA = createMenu('Personalizar Imagen', '#2d3748', function () {
-        var gi = document.getElementById('ba-global-file-input');
-        if (!gi) {
-          gi = document.createElement('input');
-          gi.id = 'ba-global-file-input';
-          gi.type = 'file';
-          gi.accept = 'image/png, image/jpeg';
-          gi.style.display = 'none';
-          document.body.appendChild(gi);
-        }
-        gi.onchange = function (e) {
-          var file = e.target.files[0];
-          if (!file) return;
-          btn.innerHTML = 'Subiendo...'; btn.style.backgroundColor = '#d69e2e';
-          var reader = new FileReader();
-          reader.onload = function (ev) {
-            compressImageContent(ev.target.result, 800, function (cmp) {
-              var cid = 'custom_' + Date.now();
-              saveToContentDB(cid, cmp).then(function () {
-                chrome.storage.local.get(['courseConfig'], function (res) {
-                  var config = res.courseConfig || {};
-                  config[courseId] = cid;
-                  chrome.storage.local.set({ courseConfig: config }, function () {
-                    processAndPaint(imgContainer, cid);
-                    btn.innerHTML = '✅ Listo'; btn.style.backgroundColor = '#38a169';
-                    setTimeout(function () {
-                      btn.innerHTML = '⚙️ Opciones';
-                      btn.style.backgroundColor = 'rgba(0,0,0,0.7)';
-                    }, 2000);
-                    gi.value = '';
+        if (BA.ImagePicker && typeof BA.ImagePicker.open === 'function') {
+          BA.ImagePicker.open(courseId);
+        } else {
+          var gi = document.getElementById('ba-global-file-input');
+          if (!gi) {
+            gi = document.createElement('input');
+            gi.id = 'ba-global-file-input';
+            gi.type = 'file';
+            gi.accept = 'image/png, image/jpeg';
+            gi.style.display = 'none';
+            document.body.appendChild(gi);
+          }
+          gi.onchange = function (e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            btn.innerHTML = 'Subiendo...'; btn.style.backgroundColor = '#d69e2e';
+            var reader = new FileReader();
+            reader.onload = function (ev) {
+              compressImageContent(ev.target.result, 800, function (cmp) {
+                var cid = 'custom_' + Date.now();
+                saveToContentDB(cid, cmp).then(function () {
+                  chrome.storage.local.get(['courseConfig'], function (res) {
+                    var config = res.courseConfig || {};
+                    config[courseId] = cid;
+                    chrome.storage.local.set({ courseConfig: config }, function () {
+                      processAndPaint(imgContainer, cid);
+                      btn.innerHTML = '✅ Listo'; btn.style.backgroundColor = '#38a169';
+                      setTimeout(function () {
+                        btn.innerHTML = '⚙️ Opciones';
+                        btn.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                      }, 2000);
+                      gi.value = '';
+                    });
                   });
                 });
               });
-            });
+            };
+            reader.readAsDataURL(file);
           };
-          reader.readAsDataURL(file);
-        };
-        gi.click();
+          gi.click();
+        }
       });
 
       var itemB = createMenu('Renombrar', '#2d3748', function () {
@@ -367,7 +375,15 @@ function applyConfig() {
     var imageToUse = globalConfig[courseId] || defaultImg;
     var cardImg    = container.querySelector('.dashboard-card-img, .card-img, .course-image-view');
     if (cardImg) {
-      processAndPaint(cardImg, imageToUse);
+      if (typeof imageToUse === 'object' && imageToUse !== null) {
+        if (BA.ImageManager && typeof BA.ImageManager.apply === 'function') {
+          BA.ImageManager.apply(courseId, imageToUse);
+        } else {
+           container.classList.add('ba-card-ready');
+        }
+      } else {
+        processAndPaint(cardImg, imageToUse);
+      }
     } else {
       container.classList.add('ba-card-ready');
     }
