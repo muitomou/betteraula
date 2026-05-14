@@ -1,4 +1,8 @@
-# Better Aula
+<p align="center">
+  <img src="icon128.png" alt="Better Aula Logo" width="128">
+</p>
+
+<h1 align="center">Better Aula</h1>
 
 **Personalización para el Moodle de la USM.**
 
