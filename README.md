@@ -1,6 +1,6 @@
 # Better Aula
 
-**Personalización avanzada e inteligente para el Moodle de la USM.**
+**Personalización para el Moodle de la USM.**
 
 ![Version](https://img.shields.io/badge/Versión-1.0.0-blue)
 ![License](https://img.shields.io/badge/Licencia-MIT-green)
