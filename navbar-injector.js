@@ -47,10 +47,8 @@
       document.querySelector('.navbar-nav');
 
     if (!anchor) {
-      // No abortar silenciosamente: avisar en consola para diagnóstico,
-      // pero sin lanzar error que rompa la página.
-      console.warn('[BetterAula] NavbarInjector: no se encontró ancla en la navbar. ' +
-        'El botón no será inyectado. Verifica selectores si cambió el DOM de Moodle.');
+      // Sin ancla (p. ej. página de login o DOM de Moodle distinto):
+      // no se inyecta el botón y no se ensucia la consola.
       return;
     }
 
@@ -72,8 +70,6 @@
     btn.addEventListener('click', function () {
       if (BA.PanelUI && typeof BA.PanelUI.toggle === 'function') {
         BA.PanelUI.toggle();
-      } else {
-        console.warn('[BetterAula] NavbarInjector: BA.PanelUI.toggle no disponible aún.');
       }
     });
 

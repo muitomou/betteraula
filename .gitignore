@@ -1,0 +1,11 @@
+# Paquetes y claves de la extensión
+*.zip
+*.xpi
+*.crx
+*.pem
+
+# Fotos personales (no se publican)
+mis-imagenes/
+
+# Sistema
+.DS_Store

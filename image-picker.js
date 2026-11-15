@@ -7,6 +7,7 @@
   var _host = null;
   var _shadow = null;
   var _courseId = null;
+  var _onSelect = null; /* callback opcional (p. ej. imagen del hero del login) */
   var _isOpen = false;
 
   var HTML_CONTENT = `
@@ -131,9 +132,10 @@
     });
   }
 
-  function openPicker(courseId) {
+  function openPicker(courseId, options) {
     if (!_host) createDOM();
     _courseId = courseId;
+    _onSelect = (options && typeof options.onSelect === 'function') ? options.onSelect : null;
     _isOpen = true;
     _host.style.display = 'block';
     _shadow.querySelector('.tab[data-target="tab-presets"]').click();
@@ -234,6 +236,13 @@
   }
 
   function applyResource(res) {
+    if (_onSelect) {
+      var cb = _onSelect;
+      _onSelect = null;
+      closePicker();
+      cb(res);
+      return;
+    }
     chrome.storage.local.get(['courseConfig'], (data) => {
        const config = data.courseConfig || {};
        config[_courseId] = res;

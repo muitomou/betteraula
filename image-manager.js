@@ -16,15 +16,7 @@
     { id: 'preset_mesh_pink', type: 'css', source: 'extension', label: 'Pink Mesh', className: 'ba-mesh-card ba-mesh-pink', thumb: '' },
     { id: 'preset_mesh_purple', type: 'css', source: 'extension', label: 'Purple Mesh', className: 'ba-mesh-card ba-mesh-purple', thumb: '' },
     { id: 'preset_mesh_celeste', type: 'css', source: 'extension', label: 'Celeste Mesh', className: 'ba-mesh-card ba-mesh-celeste', thumb: '' },
-    { id: 'preset_mesh_coffee', type: 'css', source: 'extension', label: 'Coffee Mesh', className: 'ba-mesh-card ba-mesh-coffee', thumb: '' },
-    {
-      id: 'preset_minimal_1',
-      type: 'image',
-      source: 'extension',
-      label: 'Minimal Dark',
-      url: chrome.runtime.getURL('assets/presets/minimal_dark.jpg'),
-      thumb: chrome.runtime.getURL('assets/presets/minimal_dark.jpg')
-    }
+    { id: 'preset_mesh_coffee', type: 'css', source: 'extension', label: 'Coffee Mesh', className: 'ba-mesh-card ba-mesh-coffee', thumb: '' }
   ];
 
   function initDB() {

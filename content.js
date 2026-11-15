@@ -26,8 +26,6 @@
  * BA._onNavTextChange    — callback para que ThemeEngine notifique cambios
  */
 
-console.log('[BetterAula] content.js orquestador cargado.');
-
 // ------------------------------------------------------------------
 // Namespace guard — por si content.js se carga antes que los módulos
 // (no debería ocurrir gracias al orden en manifest.json, pero defensivo)
@@ -159,7 +157,7 @@ function injectUploadButtons() {
       });
 
       var btn = document.createElement('button');
-      btn.innerHTML = '⚙️ Opciones';
+      btn.textContent = '⚙️ Opciones';
       Object.assign(btn.style, {
         backgroundColor: 'rgba(0,0,0,0.7)', color: 'white',
         border: '1px solid rgba(255,255,255,0.3)', borderRadius: '20px',
@@ -186,9 +184,9 @@ function injectUploadButtons() {
         menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
       });
 
-      var createMenu = function (html, color, fn) {
+      var createMenu = function (label, color, fn) {
         var i = document.createElement('div');
-        i.innerHTML = html;
+        i.textContent = label;
         Object.assign(i.style, {
           padding: '8px 12px', fontSize: '12px', color: color,
           cursor: 'pointer', borderBottom: '1px solid #e2e8f0',
@@ -220,7 +218,7 @@ function injectUploadButtons() {
           gi.onchange = function (e) {
             var file = e.target.files[0];
             if (!file) return;
-            btn.innerHTML = 'Subiendo...'; btn.style.backgroundColor = '#d69e2e';
+            btn.textContent = 'Subiendo...'; btn.style.backgroundColor = '#d69e2e';
             var reader = new FileReader();
             reader.onload = function (ev) {
               compressImageContent(ev.target.result, 800, function (cmp) {
@@ -231,9 +229,9 @@ function injectUploadButtons() {
                     config[courseId] = cid;
                     chrome.storage.local.set({ courseConfig: config }, function () {
                       processAndPaint(imgContainer, cid);
-                      btn.innerHTML = '✅ Listo'; btn.style.backgroundColor = '#38a169';
+                      btn.textContent = '✅ Listo'; btn.style.backgroundColor = '#38a169';
                       setTimeout(function () {
-                        btn.innerHTML = '⚙️ Opciones';
+                        btn.textContent = '⚙️ Opciones';
                         btn.style.backgroundColor = 'rgba(0,0,0,0.7)';
                       }, 2000);
                       gi.value = '';
@@ -412,7 +410,7 @@ function processAndPaint(element, imagePath) {
         imageCache[imagePath] = base64Data;
         paintElement(element, base64Data);
       })
-      .catch(function (e) { console.warn('[BetterAula] Foto custom no hallada en DB', e); });
+      .catch(function () { /* imagen custom no encontrada en la DB: se deja la imagen original */ });
     return;
   }
 

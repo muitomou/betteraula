@@ -1,0 +1,237 @@
+/**
+ * @file login-theme.css
+ * @description Estilos de Better Aula para la página de inicio de sesión (portada) de Aula USM.
+ *
+ * Todo está acotado a html.ba-login-page, que solo agrega login-theme.js
+ * cuando detecta la portada. Los elementos se seleccionan por el atributo
+ * data-ba-login que pone ese módulo, para no depender de las clases de la USM.
+ */
+
+/* =========================================
+   1. TEMA DE COLORES (solo si el usuario eligió un tema)
+   Se reescriben las variables propias de la portada.
+   ========================================= */
+html.ba-login-page.ba-login-themed {
+    --usm-blue: var(--ba-accent);
+    --usm-blue-dark: color-mix(in srgb, var(--ba-accent) 78%, #000);
+    --usm-blue-deep: var(--ba-nav);
+    --usm-blue-light: color-mix(in srgb, var(--ba-accent) 14%, #fff);
+    --usm-yellow: var(--ba-accent);
+    --canvas: var(--ba-bg);
+    --text: var(--ba-text-primary);
+    --line: var(--ba-card-border);
+    --focus: var(--ba-accent);
+}
+
+html.ba-login-page.ba-login-themed body {
+    background: var(--ba-bg) !important;
+}
+
+html.ba-login-page.ba-login-themed [data-ba-login="header"],
+html.ba-login-page.ba-login-themed [data-ba-login="utility"],
+html.ba-login-page.ba-login-themed [data-ba-login="footer"] {
+    background: var(--ba-nav) !important;
+    color: var(--ba-text-nav) !important;
+}
+
+html.ba-login-page.ba-login-themed [data-ba-login="header"] {
+    border-bottom-color: var(--ba-accent) !important;
+}
+
+html.ba-login-page.ba-login-themed [data-ba-login="header"] a,
+html.ba-login-page.ba-login-themed [data-ba-login="header"] button,
+html.ba-login-page.ba-login-themed [data-ba-login="utility"] a,
+html.ba-login-page.ba-login-themed [data-ba-login="footer"] a,
+html.ba-login-page.ba-login-themed [data-ba-login="footer"] p {
+    color: var(--ba-text-nav) !important;
+}
+
+/* Logo blanco de la USM sobre una navbar clara: se pone sobre una
+   placa oscura para que mantenga sus colores y se lea bien. */
+html.ba-login-page.ba-login-nav-light [data-ba-login="header"] .brand img {
+    background: rgba(17, 24, 39, .88);
+    padding: 6px 12px;
+    border-radius: 10px;
+    box-sizing: content-box;
+}
+
+html.ba-login-page.ba-login-nav-light [data-ba-login="header"] .brand-product {
+    border-left-color: rgba(0, 0, 0, .25) !important;
+}
+
+/* Botón principal: texto con contraste según el acento */
+html.ba-login-page.ba-login-themed [data-ba-login="access"] .button-primary {
+    color: var(--ba-login-on-accent, #fff) !important;
+}
+
+html.ba-login-page.ba-login-themed [data-ba-login="access"] .button-secondary {
+    color: var(--ba-text-primary) !important;
+    border-color: var(--ba-accent) !important;
+}
+
+html.ba-login-page.ba-login-themed [data-ba-login="access"] .eyebrow {
+    color: color-mix(in srgb, var(--ba-accent) 70%, var(--ba-text-primary)) !important;
+}
+
+html.ba-login-page.ba-login-themed [data-ba-login="newUser"] {
+    background: color-mix(in srgb, var(--ba-accent) 10%, #fff) !important;
+    border-left-color: var(--ba-accent) !important;
+}
+
+/* Textos de acento: se mezclan con el color de texto para no perder
+   contraste con acentos muy claros (p. ej. tema Pink). */
+html.ba-login-page.ba-login-themed:not(.ba-dark-mode) [data-ba-login="newUser"] h3,
+html.ba-login-page.ba-login-themed:not(.ba-dark-mode) [data-ba-login="newUser"] a,
+html.ba-login-page.ba-login-themed:not(.ba-dark-mode) [data-ba-login="access"] .option-icon {
+    color: color-mix(in srgb, var(--ba-accent) 45%, var(--ba-text-primary)) !important;
+}
+
+/* =========================================
+   2. MODO OSCURO
+   Corrige el modo oscuro global (que deja texto claro sobre las tarjetas
+   blancas de la portada) dándole superficies oscuras a cada bloque.
+   ========================================= */
+html.ba-login-page.ba-dark-mode body {
+    background: #0b1220 !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="shell"] {
+    background: #111827 !important;
+    border-color: #1f2937 !important;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .45) !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] {
+    background: #111827 !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] h2,
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] h3 {
+    color: #f9fafb !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] p,
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] li {
+    color: #cbd5e1 !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] .eyebrow {
+    color: color-mix(in srgb, var(--ba-accent) 75%, #fff) !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] .login-option {
+    background: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] .option-icon {
+    background: #111827 !important;
+    color: color-mix(in srgb, var(--ba-accent) 70%, #fff) !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] .button-secondary {
+    background: transparent !important;
+    color: #f3f4f6 !important;
+    border-color: #4b5563 !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="access"] .button-secondary:hover {
+    background: #1f2937 !important;
+    border-color: var(--ba-accent) !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="newUser"] {
+    background: #172033 !important;
+    border-left-color: var(--ba-accent) !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="newUser"] h3,
+html.ba-login-page.ba-dark-mode [data-ba-login="newUser"] h3 * {
+    color: #f3f4f6 !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="newUser"] a {
+    color: color-mix(in srgb, var(--ba-accent) 70%, #fff) !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="logos"] {
+    background: #e5e7eb !important;
+    border-color: #1f2937 !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="header"],
+html.ba-login-page.ba-dark-mode [data-ba-login="utility"],
+html.ba-login-page.ba-dark-mode [data-ba-login="footer"] {
+    background: #030712 !important;
+    color: #f9fafb !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="header"] .brand img {
+    filter: none !important;
+}
+
+html.ba-login-page.ba-dark-mode [data-ba-login="header"] a,
+html.ba-login-page.ba-dark-mode [data-ba-login="header"] button,
+html.ba-login-page.ba-dark-mode [data-ba-login="utility"] a,
+html.ba-login-page.ba-dark-mode [data-ba-login="footer"] a,
+html.ba-login-page.ba-dark-mode [data-ba-login="footer"] p {
+    color: #e5e7eb !important;
+}
+
+/* El hero siempre lleva texto blanco sobre imagen oscura */
+html.ba-login-page [data-ba-login="hero"] h1,
+html.ba-login-page [data-ba-login="hero"] h1 *,
+html.ba-login-page [data-ba-login="hero"] p {
+    color: #fff !important;
+}
+
+html.ba-login-page.ba-login-themed [data-ba-login="hero"] .eyebrow,
+html.ba-login-page.ba-dark-mode [data-ba-login="hero"] .eyebrow {
+    color: color-mix(in srgb, var(--ba-accent) 55%, #fff) !important;
+}
+
+/* =========================================
+   3. HERO PERSONALIZADO (imagen propia o gradiente)
+   ========================================= */
+html.ba-login-page [data-ba-login="hero"].ba-login-hero-custom .hero-content,
+html.ba-login-page [data-ba-login="hero"].ba-login-hero-custom > * {
+    text-shadow: 0 2px 14px rgba(0, 0, 0, .35);
+}
+
+/* =========================================
+   4. OPCIONES DE DISEÑO
+   ========================================= */
+html.ba-login-page.ba-login-hide-newuser [data-ba-login="newUser"],
+html.ba-login-page.ba-login-hide-logos [data-ba-login="logos"] {
+    display: none !important;
+}
+
+html.ba-login-page.ba-login-compact [data-ba-login="shell"] {
+    min-height: 0 !important;
+}
+
+html.ba-login-page.ba-login-compact [data-ba-login="hero"] {
+    padding: 28px 32px !important;
+}
+
+html.ba-login-page.ba-login-compact [data-ba-login="hero"] h1 {
+    font-size: clamp(1.9rem, 2.8vw, 2.6rem) !important;
+    margin-bottom: 8px !important;
+}
+
+html.ba-login-page.ba-login-compact [data-ba-login="access"] {
+    padding: 28px 32px !important;
+}
+
+html.ba-login-page.ba-login-compact [data-ba-login="access"] h2 {
+    font-size: clamp(1.4rem, 2vw, 1.8rem) !important;
+}
+
+html.ba-login-page.ba-login-compact [data-ba-login="access"] .login-option {
+    padding: 14px 16px !important;
+}
+
+html.ba-login-page.ba-login-compact [data-ba-login="newUser"] {
+    padding: 12px 16px !important;
+    font-size: .85rem !important;
+}

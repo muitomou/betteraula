@@ -5,6 +5,14 @@
 (function (BA) {
 
   // ------------------------------------------------------------------
+  // Enlaces y versión. Cambiar REPO_URL aquí si el repositorio se mueve
+  // (p. ej. a la organización LYOSS).
+  // ------------------------------------------------------------------
+  var REPO_URL = 'https://github.com/muitomou/betteraula';
+  var ISSUES_URL = REPO_URL + '/issues';
+  var VERSION = (chrome.runtime.getManifest && chrome.runtime.getManifest().version) || '';
+
+  // ------------------------------------------------------------------
   // CSS del panel — vive dentro del Shadow DOM, completamente aislado.
   // NOTA: las variables CSS de Moodle NO se heredan dentro del shadow.
   // Todos los valores son autónomos.
@@ -288,6 +296,34 @@
     '}',
     '.ba-select:focus { outline: none; border-color: #3b82f6; }',
 
+    /* ---- Página de inicio de sesión ---- */
+    '.ba-field-label { display: block; font-size: 12px; color: #6b7280; margin-bottom: 6px; }',
+    '.ba-secondary-btn {',
+    '  width: 100%;',
+    '  margin-top: 8px;',
+    '  padding: 7px;',
+    '  background: transparent;',
+    '  color: #3b82f6;',
+    '  border: 1px solid #3b82f6;',
+    '  border-radius: 8px;',
+    '  font-size: 12px;',
+    '  font-weight: 600;',
+    '  cursor: pointer;',
+    '}',
+    '.ba-secondary-btn:hover { background: rgba(59, 130, 246, 0.08); }',
+    '.ba-check {',
+    '  display: flex;',
+    '  align-items: center;',
+    '  gap: 8px;',
+    '  margin-top: 10px;',
+    '  font-size: 13px;',
+    '  color: #374151;',
+    '  cursor: pointer;',
+    '}',
+    '.ba-check input { width: 15px; height: 15px; accent-color: #3b82f6; cursor: pointer; }',
+    '#ba-panel.ba-panel-dark .ba-check { color: #d1d5db; }',
+    '#ba-panel.ba-panel-dark .ba-field-label { color: #9ca3af; }',
+
     '#ba-auto-time-container {',
     '  margin-top: 10px;',
     '  display: none;',
@@ -341,7 +377,7 @@
     '}',
 
     '.ba-show-btn {',
-    '  background: #22c55e;',
+    '  background: #15803d;',
     '  color: white;',
     '  border: none;',
     '  border-radius: 6px;',
@@ -352,7 +388,7 @@
     '  flex-shrink: 0;',
     '  transition: background 0.15s;',
     '}',
-    '.ba-show-btn:hover { background: #16a34a; }',
+    '.ba-show-btn:hover { background: #166534; }',
 
     '#ba-no-hidden-msg {',
     '  font-size: 13px;',
@@ -397,6 +433,14 @@
     '#ba-panel.ba-panel-dark .ba-select {',
     '  border-color: rgba(255,255,255,0.15);',
     '  color: #f9fafb;',
+    '  background-color: #1f2937;',
+    '}',
+    /* Las listas desplegables nativas no heredan el fondo del panel:
+       sin esto se veían blancas con texto blanco en modo oscuro. */
+    '#ba-panel.ba-panel-dark { color-scheme: dark; }',
+    '#ba-panel.ba-panel-dark .ba-select option {',
+    '  background-color: #1f2937;',
+    '  color: #f9fafb;',
     '}',
     '#ba-panel.ba-panel-dark .ba-time-input {',
     '  border-color: rgba(255,255,255,0.15);',
@@ -430,7 +474,7 @@
     '    </span>',
     '    <div>',
     '      <div class="ba-title">Better Aula</div>',
-    '      <div class="ba-version">v1.0</div>',
+    '      <div class="ba-version">v' + VERSION + '</div>',
     '    </div>',
     '  </div>',
     '  <button id="ba-close-btn" aria-label="Cerrar panel Better Aula">',
@@ -537,6 +581,20 @@
     '  </div>',
     '</div>',
 
+    /* Sección: Página de inicio de sesión (portada de Aula) */
+    '<div class="ba-section" id="ba-login-section">',
+    '  <div class="ba-section-title">Página de inicio de sesión</div>',
+    '  <label class="ba-field-label" for="ba-login-hero-select">Imagen principal</label>',
+    '  <select id="ba-login-hero-select" class="ba-select">',
+    '    <option value="default">Original de Aula</option>',
+    '    <option value="image">Mi imagen</option>',
+    '  </select>',
+    '  <button id="ba-login-hero-pick" class="ba-secondary-btn" type="button" style="display:none">Elegir imagen</button>',
+    '  <label class="ba-check"><input type="checkbox" id="ba-login-hide-newuser"> Ocultar el recuadro &laquo;¿Nuevo aquí?&raquo;</label>',
+    '  <label class="ba-check"><input type="checkbox" id="ba-login-hide-logos"> Ocultar logos institucionales</label>',
+    '  <label class="ba-check"><input type="checkbox" id="ba-login-compact"> Diseño compacto</label>',
+    '</div>',
+
     /* Sección: Ramos ocultos */
     '<div class="ba-section">',
     '  <div class="ba-section-title">Ramos ocultos</div>',
@@ -546,13 +604,10 @@
 
     /* Footer */
     '<div id="ba-footer">',
-    '  <div>Better Aula v1.0 &mdash; Aula USM</div>',
+    '  <div>Better Aula v' + VERSION + ' &mdash; Aula USM</div>',
     '  <div style="margin-top:4px; font-size: 10px; color: #6b7280; font-weight: 500;">Desarrollado por Mauro Castillo</div>',
-    '  <div style="margin-top:8px; font-size: 11px;">',
-    '    ¿Te gusta Better Aula? <a href="https://link.mercadopago.cl/donacionbetteraula" target="_blank" rel="noopener noreferrer" style="color: #3b82f6; text-decoration: none;">Apoya el proyecto aquí</a>',
-    '  </div>',
     '  <div style="margin-top:8px">',
-    '    <a href="https://github.com" target="_blank" rel="noopener">',
+    '    <a href="' + ISSUES_URL + '" target="_blank" rel="noopener noreferrer">',
     '      Reportar un problema',
     '    </a>',
     '  </div>',
@@ -761,10 +816,13 @@
 
       /* Hidratar controles con valores actuales del storage */
       chrome.storage.local.get(
-        ['uiThemeConfig', 'darkModeConfig', 'hiddenCourses', 'savedCustomThemes'],
+        ['uiThemeConfig', 'darkModeConfig', 'hiddenCourses', 'savedCustomThemes', 'loginPageConfig'],
         function (prefs) {
           if (BA.ThemeEngine && typeof BA.ThemeEngine.hydrate === 'function') {
             BA.ThemeEngine.hydrate(prefs, _shadow);
+          }
+          if (BA.LoginTheme && typeof BA.LoginTheme.hydrate === 'function') {
+            BA.LoginTheme.hydrate(prefs.loginPageConfig, _shadow);
           }
           BA.PanelUI.renderHiddenList(prefs.hiddenCourses || []);
           BA.PanelUI.renderSavedThemes(prefs.savedCustomThemes || []);
@@ -859,12 +917,7 @@
       }
       section.style.display = 'block';
 
-      /* PASO 1 — Log obligatorio de la estructura real del objeto.
-         Estructura confirmada en codebase: { id, colors: { nav, accent, bg, border, text, navText } }
-         El console.log permite verificar en runtime si ha cambiado (ej. temas guardados desde popup.js). */
-      console.log('[BA] savedCustomThemes sample:',
-        savedThemes[0] ? JSON.stringify(savedThemes[0]) : 'vacío');
-
+      /* Estructura de cada tema: { id, colors: { nav, accent, bg, border, text, navText } } */
       /* PASO 2 — Renderizar cada ítem con la estructura HTML especificada.
          Clave real del color del swatch: theme.colors.accent (verificado en log y en codebase).
          Fallback: theme.colors.nav si accent no existe (temas muy viejos del popup). */

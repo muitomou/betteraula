@@ -6,7 +6,7 @@
 
 **Personalización para el Moodle de la USM.**
 
-![Version](https://img.shields.io/badge/Versión-1.0.0-blue)
+![Version](https://img.shields.io/badge/Versión-1.1.0-blue)
 ![License](https://img.shields.io/badge/Licencia-MIT-green)
 ![Chrome](https://img.shields.io/badge/Plataforma-Chrome-orange)
 ![Firefox](https://img.shields.io/badge/Plataforma-Firefox-red)
@@ -20,6 +20,7 @@ Better Aula es una extensión de navegador construida para transformar y moderni
 *   **Modo Oscuro Integrado:** Soporte nativo para modo oscuro, con opciones de activación manual o programación automática basada en horarios.
 *   **Gestión de Cursos:** Capacidad para renombrar asignaturas con etiquetas personalizadas y ocultar/mostrar ramos específicos para mantener un panel de control limpio.
 *   **Sistema de Fondos Multimedia:** Soporte para personalizar las tarjetas de los cursos utilizando imágenes locales o gradientes de malla (mesh gradients) animados.
+*   **Página de inicio de sesión personalizada:** La portada de Aula (la que aparece antes de iniciar sesión) usa tu tema y tu modo oscuro. Puedes cambiar la imagen principal por una tuya o por un gradiente, ocultar el recuadro «¿Nuevo aquí?» y los logos institucionales, y activar un diseño compacto. En esa página, el botón **Better Aula** del menú superior abre el panel. La extensión no lee ni modifica los formularios ni los botones de inicio de sesión.
 *   **Optimización de Rendimiento:** Utilización de IndexedDB para el almacenamiento en caché de imágenes y recursos multimedia, garantizando una carga instantánea y reduciendo la redundancia de red.
 
 ## Privacidad y Seguridad
@@ -45,19 +46,22 @@ Si deseas compilar la extensión o probarla en modo desarrollador:
 
 ## Contribución
 
-Better Aula es un proyecto mantenido por y para la comunidad estudiantil. Si deseas colaborar con el desarrollo, optimizar código o integrar nuevas características, eres más que bienvenid@.
+Better Aula es un proyecto de código abierto mantenido por y para la comunidad estudiantil. Toda ayuda es bienvenida.
 
-*   Si encuentras un error, por favor abre un **Issue** documentando los pasos para reproducirlo.
-*   Si deseas contribuir con código, siéntete libre de hacer un fork del repositorio y enviar un **Pull Request**. Asegúrate de mantener un estilo de código limpio.
+### Reportar errores o proponer ideas
+*   Abre un **Issue** en el repositorio describiendo qué pasó, los pasos para reproducirlo, el navegador y su versión y, si puedes, una captura (sin datos personales: tapa tu nombre, RUT o correo).
 
-## Apoya el Proyecto
-
-El desarrollo, mantenimiento y soporte continuo de Better Aula requiere tiempo y esfuerzo. Si esta herramienta ha mejorado tu experiencia diaria en el estudio y deseas apoyar su desarrollo continuo, puedes realizar una donación.
-
-[Apoya el proyecto aquí](https://link.mercadopago.cl/donacionbetteraula)
+### Contribuir con código
+1.  Haz un fork del repositorio y crea una rama descriptiva (`fix/selector-navbar`, `feat/tema-login`, etc.).
+2.  Carga la extensión sin empaquetar (ver *Instalación para Desarrolladores*) y prueba tus cambios en Aula.
+3.  Mantén el estilo del proyecto: JavaScript sin dependencias, un módulo por responsabilidad bajo el namespace `window.BetterAula`, y nada de `console.log` en el código final.
+4.  Nunca leas, guardes ni envíes credenciales, cookies o `sesskey` de Moodle: toda la información debe quedarse en el navegador del usuario.
+5.  Abre un **Pull Request** explicando qué cambia y por qué.
 
 ## Licencia y Créditos
 
-**Desarrollado por Mauro Castillo.**
+**Autor original:** Mauro Castillo, quien creó y desarrolló Better Aula.
+
+Gracias a todas las personas que contribuyen con issues y pull requests.
 
 Este proyecto se distribuye bajo la [Licencia MIT](LICENSE). Eres libre de utilizar, modificar y distribuir este software, siempre y cuando se incluya la nota de derechos de autor y la licencia original.
